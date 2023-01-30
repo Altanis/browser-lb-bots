@@ -6,7 +6,7 @@ class Server {
     /** The scoreboards fetched by the slave tab. */
     servers = {
         /** The cached servers. */
-        cached: require("../sex.json"),
+        cached: [],
 
         /** The servers actively being fetched. */
         servers: [],
