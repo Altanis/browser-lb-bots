@@ -1,6 +1,6 @@
 /** Handles communication between master (Server) and puppet (slave tab). */
 
-const { WebSocketServer } = require("../diep-ws/index");
+const { WebSocketServer } = require("diep-ws");
 
 class Server {
     /** The scoreboards fetched by the slave tab. */
@@ -43,15 +43,26 @@ class Server {
 
                 // Message Format: { server: ServerInfo, scores: ScoreboardEntry[], end: boolean }
                 const { server, scores } = data;
-                this.servers.servers.push({ server, scores });
-                console.log({ server, scores });
+                this.servers.servers.push({ server, scores, time: Date.now() });
+                console.log(this.servers.servers[this.servers.servers.length - 1]);
 
                 if (data.end) {
+                    let linksFound = [];
+                    this.servers.servers = this.servers.servers.filter(server => {
+                        if (linksFound.includes(server.server.link)) return false;
+                        linksFound.push(server.server.link);
+                        return true;
+                    });
+
                     this.servers.cached = this.servers.servers;
                     this.servers.cached.lastSweep = Date.now();
 
                     this.servers.servers = {};
-                    require("node:fs").writeFileSync("sex.json", JSON.stringify(this.servers.cached, null, 4), "utf8");
+
+                    this.wss.tunnelInit({
+                        servers: this.servers.cached
+                    }).then(() => console.log("Crowdsourced servers.")).catch(er => console.error("Could not crowdsource servers! Contact Altanis#0129.", er));
+
                     console.log("Finished caching servers.");
                 }
             });

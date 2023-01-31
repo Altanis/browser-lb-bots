@@ -1,15 +1,17 @@
 {
   "dependencies": {
     "@discordjs/rest": "^1.5.0",
+    "diep-ws": "^1.0.0",
     "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "node-fetch": "2.6.9"
   },
   "name": "browser-lb-bots",
   "description": "Browser LB Bots which help crowdsource a central LB Bot.",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

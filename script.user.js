@@ -21,6 +21,28 @@
     while (window.onbeforeunload !== null)
         window.onbeforeunload = null;
 
+    /** Ensure no tomfoolery from the Diep.io servers occurs. */
+    let _fetch = window.fetch;
+    window.fetch = async function(...args) {
+        const result = await _fetch(...args);
+
+        if (args[0].includes('/find')) {
+            console.log(result.status);
+            if (result.status === 429) {
+                let resp = result.clone();
+                let json = await resp.json();
+                console.log('ratelimited', json, json.metadata);
+                setTimeout(() => {
+                    window.location.reload();
+                }, json.metadata - Date.now() + 1000);
+            } else if (result.status !== 200 && ![403].includes(result.status)) { // 403 = forbidden, solve captcha
+                 lobby.move();
+            } else if (result.status === 403) console.log("Solve the captcha in order to proceed.");
+        }
+
+        return result;
+    }
+
     /** Possibilities of every antecedent. */
     const base = "Lvl * Tank";
     const possibilities = [];
@@ -186,7 +208,8 @@
         }
     };
 
-    new Scanner(new Lobby());
+    const lobby = new Lobby();
+    const scanner = new Scanner(lobby);
 
     /** Disable debugger when opening console. */
     Function.prototype.constructor = new Proxy(Function.prototype.constructor, {
@@ -197,14 +220,11 @@
     });
 
     /** Credits to ABC for his Score Precision script! */
-    const thousandPrecision = 6;
-    const millionPrecision = 2;
-
     const encoder = new TextEncoder();
 
     const replaces = [
-        ['%.1fm\x00', `%.${millionPrecision}f$ \x00`],
-        ['%.1fk\x00', `%.${thousandPrecision}f \x00`],
+        ['%.1fm\x00', `%.6f$ \x00`],
+        ['%.1fk\x00', `%.2f \x00`],
     ].map((replace) => replace.map(str => encoder.encode(str)));
 
     const replaceOf = (buf, from, to) => {
