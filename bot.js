@@ -1,3 +1,5 @@
+/** This file is purely for illustrative purposes on how the bot runs. There is no reason to run this. */
+
 require('dotenv').config();
 
 // -- IMPORTS -- //

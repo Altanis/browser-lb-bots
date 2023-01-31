@@ -1,6 +1,6 @@
 /** Handles communication between master (Server) and puppet (slave tab). */
 
-const { WebSocketServer } = require("ws");
+const { WebSocketServer } = require("../diep-ws/index");
 
 class Server {
     /** The scoreboards fetched by the slave tab. */

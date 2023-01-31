@@ -2,7 +2,23 @@
   "dependencies": {
     "@discordjs/rest": "^1.5.0",
     "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3",
-    "ws": "^8.12.0"
-  }
+    "dotenv": "^16.0.3"
+  },
+  "name": "browser-lb-bots",
+  "description": "Browser LB Bots which help crowdsource a central LB Bot.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Altanis/browser-lb-bots.git"
+  },
+  "author": "Altanis#0129",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Altanis/browser-lb-bots/issues"
+  },
+  "homepage": "https://github.com/Altanis/browser-lb-bots#readme"
 }
