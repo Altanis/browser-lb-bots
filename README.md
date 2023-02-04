@@ -12,7 +12,7 @@ Users (anyone, even you!) can help keep our bot up to date. Using a server and "
 
 A video detailing instructions will be shown here later, but for now:
 
-1. Install [Node.js](https://nodejs.org/en/), preferably current rather than LTS.
+1. Install [Node.js](https://nodejs.org/en/), preferably LTS rather than current.
     - Ensure Node.js is added to PATH.
 2. Clone this repository locally.
     - You can do this by either:
