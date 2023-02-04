@@ -26,7 +26,7 @@
     window.fetch = async function(...args) {
         const result = await _fetch(...args);
 
-        if (args[0].includes('/find')) {
+        if (args[0].includes('/find') || args[0].includes("/join")) {
             console.log(result.status);
             if (result.status === 429) {
                 let resp = result.clone();
